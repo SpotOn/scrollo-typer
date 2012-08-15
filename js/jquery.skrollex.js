@@ -7,8 +7,7 @@
       $window,
       windowHeight,
   //numbers
-      ABOVE_ZERO = 1e-16,
-      BELOW_ONE = 1 - ABOVE_ZERO,
+      ABOVE_ZERO = 1e-99,
 
   //states
       BEFORE = 0,
@@ -199,8 +198,8 @@
         }
         else if (state !== AFTER && scrollWithOffset > end) {
           for (j = 0, ll = anims.length; j < ll; j++) {
-            if (scrollWithOffset - end > windowHeight)
-              anims[j].progress(BELOW_ONE).pause();
+            if (scrollWithOffset - end > windowHeight || duration)
+              anims[j].progress(1).pause();
             else
               anims[j].play();
           }
@@ -208,10 +207,10 @@
         }
         else if (state !== BEFORE && scrollWithOffset < start) {
           for (j = 0, ll = anims.length; j < ll; j++) {
-            if (start - scrollWithOffset > windowHeight)
+            if (start - scrollWithOffset > windowHeight || duration)
               anims[j].progress(ABOVE_ZERO).pause();
             else
-            anims[j].reverse();
+              anims[j].reverse();
           }
           mix.state = BEFORE;
         }
