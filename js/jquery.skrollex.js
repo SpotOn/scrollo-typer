@@ -35,8 +35,6 @@
     that._mixes = [];
     that._offset = that.getOffset();
 
-    that._counter = 0;
-
     $window
         .scroll(function () {
           that._animate();
@@ -152,7 +150,6 @@
 
 
       for (i = 0, l = mixes.length; i < l; i++) {
-        that._counter++;
         mix = mixes[i];
 
         $target = mix.target;
