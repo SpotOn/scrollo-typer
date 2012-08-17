@@ -14,17 +14,12 @@
       IN_PROGRESS = 1,
       AFTER = 2,
 
-  //defaults
-      defaults = {
-        getOffset: function () {
-          return $window.height() / 2;
-        }
-      },
-
   //singleton
       that = null;
 
   function Skrollex(options) {
+    var
+        getOffset;
 
     if (that) return that;
     that = this;
@@ -32,7 +27,11 @@
     $window = $(window);
     windowHeight = $window.height();
 
-    $.extend(that, defaults, options);
+    options = options || {};
+
+    if (getOffset = options.getOffset)
+      that.getOffset = getOffset;
+
     that._mixes = [];
     that._offset = that.getOffset();
 
@@ -54,6 +53,12 @@
 
   Skrollex.prototype = {
     constructor: Skrollex,
+
+
+    getOffset: function () {
+      return $window.height() / 2;
+    },
+
 
     addMix: function (options) {
       var
