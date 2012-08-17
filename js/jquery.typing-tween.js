@@ -44,13 +44,13 @@
 
   function extendClass(child, parent) {
 
-    function Ctor() {
+    function Parent() {
       this.constructor = child;
       this.__super__ = parent.prototype;
     }
 
-    Ctor.prototype = parent.prototype;
-    child.prototype = new Ctor;
+    Parent.prototype = parent.prototype;
+    child.prototype = new Parent;
     return child;
   }
 
@@ -310,8 +310,10 @@
       that._removeQueue = $removeQueue;
     },
 
-    //override
+    //@override
     _render : function () {
+      that.__super__._render.call(that);
+
       var
           METHODS = ['show', 'hide'],
 
@@ -328,8 +330,6 @@
           reversed = from > to,
 
           index;
-
-      that.__super__._render.call(that);
 
       for (;
           reversed ? i > to : i < to;
