@@ -312,7 +312,7 @@
 
     //@override
     _render : function () {
-      that.__super__._render.call(that);
+      //this.__super__._render.call(that);
 
       var
           METHODS = ['show', 'hide'],
