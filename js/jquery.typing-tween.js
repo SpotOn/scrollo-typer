@@ -286,6 +286,8 @@
         $chars = $target.children();
       }
 
+      that.target.append('<span class="typing-tween-cursor animate">|</span>');
+
       if (_add === WORD) {
         $addQueue = $addQueue.add($words);
       }
