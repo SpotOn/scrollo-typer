@@ -216,6 +216,7 @@
     if (!$target.jquery)
       $target = $($target);
     that.target = $target;
+    that.cursor = null;
 
     that._add = that._setMode(options.add);
     that._remove = that._setMode(options.remove);
@@ -264,6 +265,7 @@
       var
           that = this,
           $target = that.target,
+          $cursor,
           wrap = that._wrap,
 
           _add = that._add,
@@ -286,7 +288,8 @@
         $chars = $target.children();
       }
 
-      that.target.append('<span class="typing-tween-cursor animate">|</span>');
+      that.cursor = $cursor = $('<span class="typing-tween-cursor animate">|</span>');
+      that.target.append($cursor);
 
       if (_add === WORD) {
         $addQueue = $addQueue.add($words);
@@ -320,6 +323,8 @@
           METHODS = ['show', 'hide'],
 
           that = this,
+
+          $cursor = that.cursor,
           addCount = that._addCount,
           removeCount = that._removeCount,
 
@@ -330,6 +335,7 @@
           to = ~~(length * that._state),
 
           reversed = from > to,
+          changed = false,
 
           index;
 
@@ -346,6 +352,14 @@
         //reversed lookup (removeCount  - (index - addCount) - 1)
           that._removeQueue.eq(removeCount + addCount - index - 1)[METHODS[1 - reversed]]();
 
+        changed = true;
+      }
+
+      if(changed){
+        $cursor.toggleClass('animate');
+        setTimeout(function(){
+          $cursor.toggleClass('animate');
+        },0);
       }
     }
   });

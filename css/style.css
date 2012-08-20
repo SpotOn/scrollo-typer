@@ -128,28 +128,30 @@ blockquote {
 }
 
 @keyframes blink {
-  0%,100% {opacity:1}
-  50%     {opacity:0}
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
 }
 
 @-moz-keyframes blink {
-  0%,100% {opacity:1}
-  50%     {opacity:0}
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
 }
 
 @-webkit-keyframes blink {
-  0%,100% {opacity:1}
-  50%     {opacity:0}
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
 }
 
 @-o-keyframes blink {
-  0%,100% {opacity:1}
-  50%     {opacity:0}
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
 }
 
 .typing-tween-cursor {
+  font-family: Arial;
   font-style: normal;
   font-weight: normal;
+  opacity: .99;
 }
 
 .typing-tween-cursor.animate {
