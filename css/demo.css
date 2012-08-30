@@ -1,0 +1,58 @@
+body {
+  background: #fafafa;
+}
+
+.pin {
+  width: 100%;
+}
+
+#thoughts {
+  width: 960px;
+  margin: auto;
+
+  font: 32px "helvetica-neue", helvetica, arial, sans-serif;
+  line-height: 48px;
+}
+
+#thoughts div {
+  position: absolute;
+  top: 300px;
+}
+
+#placeholder {
+  color: #999;
+}
+
+@keyframes blink {
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
+}
+
+@-moz-keyframes blink {
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
+}
+
+@-webkit-keyframes blink {
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
+}
+
+@-o-keyframes blink {
+  20%,100% {opacity:.99}
+  50%      {opacity:0}
+}
+
+.typing-tween-cursor {
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  opacity: .99;
+}
+
+.typing-tween-cursor.animate {
+  animation: blink 1s infinite;
+  -moz-animation: blink 1s infinite;
+  -webkit-animation: blink 1s infinite;
+  -o-animation: blink 1s infinite;
+}

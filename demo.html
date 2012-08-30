@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Animatic Demo</title>
+
+<link rel=stylesheet href=css/normalize.css>
+<link rel=stylesheet href=css/demo.css>
+
+<div id=thoughts-pin class=pin>
+  <div id=thoughts>
+    <div id=placeholder>&nbsp; What's on your mind?</div>
+
+    <div id=shit-together>Spent the weekend with friends from HS, why does <br>everyone have their shit together?</div>
+
+    <div id=out-of-time>I feel like I'm running out of time, what am I doing with my life?</div>
+
+    <div id=kiss>Seeing Robin reminded me of hanging out by the <br>water tower. I wonder if she remembers that kiss?
+    </div>
+  </div>
+</div>
+
+
+<script type=text/javascript src=js/greensock/TweenMax.min.js></script>
+<script src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js></script>
+<script>window.jQuery || document.write('<script src=js/jquery-1.7.2.min.js><\/script>')</script>
+<script src=js/jquery.skrollex.js></script>
+<script src=js/jquery.typing-tween.js></script>
+
+<script>
+  $('#thoughts-pin').skrollex({
+    animation: [
+      {
+        tween : TweenMax.to($('#placeholder'), .1, {css: {opacity: 0}}),
+        offset: 1
+      },
+      {
+        tween        : $('#shit-together').typingTween({
+          duration: 2,
+          add     : 'char'
+        }),
+        duration     : 600,
+        onStateChange: function (fromState, toState) {
+          var cursor = $('#shit-together .typing-tween-cursor');
+
+          if (toState === 'IN_PROGRESS') {
+            cursor.show()
+          }
+          if (toState === 'AFTER') {
+            cursor.hide()
+          }
+        }
+      },
+      {
+        tween   : TweenMax.to($('#shit-together'), .2, {css: {fontSize: 16, lineHeight: 20, top: 20}}),
+        offset  : 600,
+        duration: 200
+      },
+      {
+        tween        : $('#out-of-time').typingTween({
+          duration: 1,
+          add     : 'char'
+        }),
+        offset       : 800,
+        duration     : 600,
+        onStateChange: function (fromState, toState) {
+          var cursor = $('#out-of-time .typing-tween-cursor');
+
+          if (toState === 'IN_PROGRESS') {
+            cursor.show()
+          }
+          else {
+            cursor.hide()
+          }
+        }
+      },
+      {
+        tween   : TweenMax.to($('#out-of-time'), .2, {css: {fontSize: 16, lineHeight: 20, top: 70}}),
+        offset  : 1400,
+        duration: 200
+      },
+      {
+        tween        : $('#kiss').typingTween({
+          duration: 1,
+          add     : 'char'
+        }),
+        offset       : 1600,
+        duration     : 600,
+        onStateChange: function (fromState, toState) {
+          var cursor = $('#kiss .typing-tween-cursor');
+
+          if (toState === 'IN_PROGRESS') {
+            cursor.show()
+          }
+          else {
+            cursor.hide()
+          }
+        }
+      },
+      {
+        tween   : TweenMax.to($('#kiss'), .2, {css: {fontSize: 16, lineHeight: 20, top: 100}}),
+        offset  : 2200,
+        duration: 200
+      }
+    ],
+    pin      : {
+      duration: 1000 + 2400
+    }
+  }).height(1000 + 2400);
+
+  $('.typing-tween-cursor').not('#shit-together .typing-tween-cursor').hide();
+</script>
