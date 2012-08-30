@@ -243,20 +243,28 @@
       }
     },
 
-    _wrap: function ($el, splitter, cssClass, indexShift) {
+    _wrap: function ($el, splitter, cssClass, indexShift, separator, separateLines) {
       var count = 0;
 
-      $el.html(
-          $.map(
-              $el.text().split(splitter),
-              function (item, i) {
-                count++;
-                return '<span class="' + cssClass + ' ' + (i + indexShift) + '">' +
-                    item + splitter +
-                    '</span>'
-              })
-              .join('')
-      );
+      if (separator === undefined) separator = splitter;
+
+      if ($el.children().is('br')) {
+        count++;
+        $el.html('<span class="' + cssClass + ' ' + indexShift + '">' +
+            '<br></span>');
+      }
+      else
+        $el.html(
+            $.map(
+                $el.text().split(splitter),
+                function (item, i) {
+                  count++;
+                  return '<span class="' + cssClass + ' ' + (i + indexShift) + '">' +
+                      item + separator +
+                      '</span>'
+                })
+                .join(separateLines ? '<span><br></span>' : '')
+        );
 
       return count;
     },
@@ -268,6 +276,8 @@
           $cursor,
           wrap = that._wrap,
 
+          NEW_LINE_SPLIT = '_' + $target.text() + '=',
+
           _add = that._add,
           _remove = that._remove,
           $addQueue = that._addQueue,
@@ -275,6 +285,9 @@
 
           $words, $chars,
           charIndex = 0;
+
+      wrap($target.children('br').replaceWith(NEW_LINE_SPLIT).end(), NEW_LINE_SPLIT, 'line', 0, '', true);
+      $target = $target.children();
 
       if (_add === WORD || _remove === WORD) {
         wrap($target, ' ', 'word', 0);
@@ -355,11 +368,11 @@
         changed = true;
       }
 
-      if(changed){
+      if (changed) {
         $cursor.toggleClass('animate');
-        setTimeout(function(){
+        setTimeout(function () {
           $cursor.toggleClass('animate');
-        },0);
+        }, 0);
       }
     }
   });
