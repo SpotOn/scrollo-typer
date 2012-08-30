@@ -82,16 +82,20 @@
         $target = $($target);
 
       top = $target.offset().top;
-      start = top - (options.offset || 0);
-      duration = options.duration || 0;
 
-      anims = options.anim || [];
+      anims = options.animation || [];
 
       if (!$.isArray(anims))
         anims = [anims];
 
       $.each(anims, function (i, anim) {
-        anim.progress(ABOVE_ZERO).pause();
+        anim.state = BEFORE;
+
+        anim.duration = duration = anim.duration || 0;
+        anim.start = start = top + (anim.offset || 0);
+        anim.end = start + duration;
+
+        anim.tween.progress(ABOVE_ZERO).pause();
       });
 
       pin = options.pin;
@@ -112,13 +116,9 @@
       }
 
       this._mixes.push({
-        target  : $target,
-        anims   : anims,
-        duration: duration,
-        start   : start,
-        end     : start + duration,
-        state   : BEFORE,
-        pin     : pin
+        target: $target,
+        anims : anims,
+        pin   : pin
       });
     },
 
@@ -141,7 +141,7 @@
           pin,
           pinned,
 
-          anims,
+          anims, anim, tween,
           duration, start, end, offset, height,
           $pusher,
           state,
@@ -185,36 +185,36 @@
 
         anims = mix.anims;
 
-        duration = mix.duration;
-        start = mix.start;
-        end = mix.end;
 
-        state = mix.state;
+        for (j = 0, ll = anims.length; j < ll; j++) {
+          anim = anims[j];
 
-        if (scrollWithOffset > start && scrollWithOffset < end) {
+          duration = anim.duration;
+          start = anim.start;
+          end = anim.end;
 
-          for (j = 0, ll = anims.length; j < ll; j++) {
-            anims[j].progress((scrollWithOffset - start) / duration).pause();
+          state = anim.state;
+
+          tween = anim.tween;
+
+          if (scrollWithOffset > start && scrollWithOffset < end) {
+            tween.progress((scrollWithOffset - start) / duration).pause();
+            anim.state = IN_PROGRESS;
           }
-          mix.state = IN_PROGRESS;
-        }
-        else if (state !== AFTER && scrollWithOffset >= end) {
-          for (j = 0, ll = anims.length; j < ll; j++) {
+          else if (state !== AFTER && scrollWithOffset >= end) {
             if (scrollWithOffset - end > windowHeight || duration)
-              anims[j].progress(1).pause();
+              tween.progress(1).pause();
             else
-              anims[j].play();
+              tween.play();
+            anim.state = AFTER;
           }
-          mix.state = AFTER;
-        }
-        else if (state !== BEFORE && scrollWithOffset <= start) {
-          for (j = 0, ll = anims.length; j < ll; j++) {
+          else if (state !== BEFORE && scrollWithOffset <= start) {
             if (start - scrollWithOffset > windowHeight || duration)
-              anims[j].progress(ABOVE_ZERO).pause();
+              tween.progress(ABOVE_ZERO).pause();
             else
-              anims[j].reverse();
+              tween.reverse();
+            anim.state = BEFORE;
           }
-          mix.state = BEFORE;
         }
       }
 
