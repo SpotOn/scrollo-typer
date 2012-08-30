@@ -45,24 +45,30 @@
     });
 
     $('#type-it').skrollex({
-      anim    : tt,
-      duration: duration,
-      pin     : {
-        offset: 200,
+      animation: {
+        tween   : tt,
+        duration: duration
+      },
+      pin      : {
+        offset  : 200,
         duration: duration
       }
     });
 
     $('#fade-it').skrollex({
-      anim    : TweenMax.from($('#fade-it'), .5, {css: {opacity: 0}}),
-      duration: duration
+      animation: {
+        tween   : TweenMax.from($('#fade-it'), .5, {css: {opacity: 0}}),
+        duration: duration
+      }
     });
 
     $('#fly-it-pin').skrollex({
-      anim    : TweenMax.fromTo($('#fly-it'), .25, {css: {right: '400px'}, ease: Quad.easeInOut}, {css: {right: '-400px'}, ease: Quad.easeInOut}),
-      duration: duration,
-      offset  : -200,
-      pin     : {
+      animation: {
+        tween   : TweenMax.fromTo($('#fly-it'), .25, {css: {right: '400px'}, ease: Quad.easeInOut}, {css: {right: '-400px'}, ease: Quad.easeInOut}),
+        duration: duration,
+        offset  : -200
+      },
+      pin      : {
         offset  : 400,
         duration: 600
 //        ,height  : 400
@@ -70,22 +76,28 @@
     });
 
     $('#spin-it').skrollex({
-      anim    : TweenMax.from($('#spin-it'), .5, {css: {opacity: 0, rotation: 720}, ease: Quad.easeOut}),
-      duration: duration
+      animation: {
+        tween   : TweenMax.from($('#spin-it'), .5, {css: {opacity: 0, rotation: 720}, ease: Quad.easeOut}),
+        duration: duration
+      }
     });
 
     $('#scale-it').skrollex({
-      anim    : TweenMax.fromTo($('#scale-it'), .25,
-          {css: {opacity: 0, fontSize: '20px'}, immediateRender: true, ease: Quad.easeInOut},
-          {css: {opacity: 1, fontSize: '240px'}, ease: Quad.easeInOut}),
-      duration: duration
+      animation: {
+        tween   : TweenMax.fromTo($('#scale-it'), .25,
+            {css: {opacity: 0, fontSize: '20px'}, immediateRender: true, ease: Quad.easeInOut},
+            {css: {opacity: 1, fontSize: '240px'}, ease: Quad.easeInOut}),
+        duration: duration
+      }
     });
 
     $('#smush-it').skrollex({
-      anim    : TweenMax.fromTo($('#smush-it'), .25,
-          {css: {opacity: 0, 'letter-spacing': '30px'}, immediateRender: true, ease: Quad.easeInOut},
-          {css: {opacity: 1, 'letter-spacing': '-10px'}, ease: Quad.easeInOut}),
-      duration: duration
+      animation: {
+        tween   : TweenMax.fromTo($('#smush-it'), .25,
+            {css: {opacity: 0, 'letter-spacing': '30px'}, immediateRender: true, ease: Quad.easeInOut},
+            {css: {opacity: 1, 'letter-spacing': '-10px'}, ease: Quad.easeInOut}),
+        duration: duration
+      }
     });
   });
 
