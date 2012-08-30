@@ -171,11 +171,11 @@
             $target.css({position: 'fixed', top: offset});
             pin.pinned = IN_PROGRESS;
           }
-          else if (pinned !== AFTER && scrollWithOffset > end) {
+          else if (pinned !== AFTER && scrollWithOffset >= end) {
             $target.css({position: 'absolute', top: start + height});
             pin.pinned = AFTER;
           }
-          else if (pinned !== BEFORE && scrollWithOffset < start) {
+          else if (pinned !== BEFORE && scrollWithOffset <= start) {
             $target.css({position: 'absolute', top: start});
             pin.pinned = BEFORE;
           }
@@ -198,7 +198,7 @@
           }
           mix.state = IN_PROGRESS;
         }
-        else if (state !== AFTER && scrollWithOffset > end) {
+        else if (state !== AFTER && scrollWithOffset >= end) {
           for (j = 0, ll = anims.length; j < ll; j++) {
             if (scrollWithOffset - end > windowHeight || duration)
               anims[j].progress(1).pause();
@@ -207,7 +207,7 @@
           }
           mix.state = AFTER;
         }
-        else if (state !== BEFORE && scrollWithOffset < start) {
+        else if (state !== BEFORE && scrollWithOffset <= start) {
           for (j = 0, ll = anims.length; j < ll; j++) {
             if (start - scrollWithOffset > windowHeight || duration)
               anims[j].progress(ABOVE_ZERO).pause();
