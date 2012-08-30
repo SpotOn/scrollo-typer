@@ -9,11 +9,6 @@
   //numbers
       ABOVE_ZERO = 1e-99,
 
-  //states
-      BEFORE = 0,
-      IN_PROGRESS = 1,
-      AFTER = 2,
-
   //singleton
       that = null;
 
@@ -89,7 +84,7 @@
         anims = [anims];
 
       $.each(anims, function (i, anim) {
-        anim.state = BEFORE;
+        anim.state = 'BEFORE';
 
         anim.duration = duration = anim.duration || 0;
         anim.start = start = top + (anim.offset || 0);
@@ -101,7 +96,7 @@
       pin = options.pin;
 
       if (pin) {
-        pin.pinned = BEFORE;
+        pin.pinned = 'BEFORE';
         pinDuration = pin.duration = pin.duration || 0;
         pinOffset = pin.offset = pin.offset || 0;
         pinStart = pin.start = top;
@@ -141,7 +136,7 @@
           pin,
           pinned,
 
-          anims, anim, tween,
+          anims, anim, tween, onStateChange,
           duration, start, end, offset, height,
           $pusher,
           state,
@@ -167,17 +162,17 @@
 
 //          console.log(start, end, offset, scroll, scrollWithOffset);
 
-          if (pinned !== IN_PROGRESS && scrollWithOffset > start && scrollWithOffset < end) {
+          if (pinned !== 'IN_PROGRESS' && scrollWithOffset > start && scrollWithOffset < end) {
             $target.css({position: 'fixed', top: offset});
-            pin.pinned = IN_PROGRESS;
+            pin.pinned = 'IN_PROGRESS';
           }
-          else if (pinned !== AFTER && scrollWithOffset >= end) {
+          else if (pinned !== 'AFTER' && scrollWithOffset >= end) {
             $target.css({position: 'absolute', top: start + height});
-            pin.pinned = AFTER;
+            pin.pinned = 'AFTER';
           }
-          else if (pinned !== BEFORE && scrollWithOffset <= start) {
+          else if (pinned !== 'BEFORE' && scrollWithOffset <= start) {
             $target.css({position: 'absolute', top: start});
-            pin.pinned = BEFORE;
+            pin.pinned = 'BEFORE';
           }
 
         }
@@ -196,24 +191,34 @@
           state = anim.state;
 
           tween = anim.tween;
+          onStateChange = anim.onStateChange;
 
           if (scrollWithOffset > start && scrollWithOffset < end) {
             tween.progress((scrollWithOffset - start) / duration).pause();
-            anim.state = IN_PROGRESS;
+            if(onStateChange && anim.state !== 'IN_PROGRESS'){
+              onStateChange(anim.state, 'IN_PROGRESS');
+            }
+            anim.state = 'IN_PROGRESS';
           }
-          else if (state !== AFTER && scrollWithOffset >= end) {
+          else if (state !== 'AFTER' && scrollWithOffset >= end) {
             if (scrollWithOffset - end > windowHeight || duration)
               tween.progress(1).pause();
             else
               tween.play();
-            anim.state = AFTER;
+            if(onStateChange){
+              onStateChange(anim.state, 'AFTER');
+            }
+            anim.state = 'AFTER';
           }
-          else if (state !== BEFORE && scrollWithOffset <= start) {
+          else if (state !== 'BEFORE' && scrollWithOffset <= start) {
             if (start - scrollWithOffset > windowHeight || duration)
               tween.progress(ABOVE_ZERO).pause();
             else
               tween.reverse();
-            anim.state = BEFORE;
+            if(onStateChange){
+              onStateChange(anim.state, 'BEFORE');
+            }
+            anim.state = 'BEFORE';
           }
         }
       }
