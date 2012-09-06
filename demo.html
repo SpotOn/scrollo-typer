@@ -9,12 +9,11 @@
   <div id=thoughts>
     <div id=placeholder>&nbsp; What's on your mind?</div>
 
-    <div id=shit-together>Spent the weekend with friends from HS, why does <br>everyone have their shit together?</div>
+    <div id=hight-school>I spent the weekend with my friends from High School</div>
 
-    <div id=out-of-time>I feel like I'm running out of time, what am I doing with my life?</div>
+    <div id=shit-together>Why does everyone else seem to have<br>their shit together besides me?</div>
 
-    <div id=kiss>Seeing Robin reminded me of hanging out by the <br>water tower. I wonder if she remembers that kiss?
-    </div>
+    <div id=hot>It was weird to see Rachel again...<br>but she looked hot. Maybe I should ask her out…</div>
   </div>
 </div>
 
@@ -22,81 +21,84 @@
 <script type=text/javascript src=js/greensock/TweenMax.min.js></script>
 <script src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js></script>
 <script>window.jQuery || document.write('<script src=js/jquery-1.7.2.min.js><\/script>')</script>
-<script src=js/jquery.skrollex.js></script>
 <script src=js/jquery.typing-tween.js></script>
+<script src=js/jquery.skrollex.js></script>
 
 <script>
   $('#thoughts-pin').skrollex({
     animation: [
       {
-        tween : TweenMax.to($('#placeholder'), .1, {css: {opacity: 0}}),
-        offset: 1
+        tween   : TweenMax.to($('#placeholder'), .1, {css: {opacity: 0}}),
+        duration: 1
       },
       {
-        tween        : $('#shit-together').typingTween({
+        tween        : $('#hight-school').typingTween({
           duration: 2,
           add     : 'char'
         }),
         duration     : 600,
         onStateChange: function (fromState, toState) {
-          var cursor = $('#shit-together .typing-tween-cursor');
+          var
+              block = $('#hight-school');
 
           if (toState === 'IN_PROGRESS') {
-            cursor.show()
+            block.removeClass('crossed');
           }
-          if (toState === 'AFTER') {
-            cursor.hide()
+          else {
+            block.addClass('crossed');
           }
         }
       },
       {
-        tween   : TweenMax.to($('#shit-together'), .2, {css: {fontSize: 16, lineHeight: 20, top: 20}}),
+        tween   : TweenMax.to($('#hight-school'), .2, {css: {fontSize: 16, lineHeight: 20, top: 20}}),
         offset  : 600,
         duration: 200
       },
       {
-        tween        : $('#out-of-time').typingTween({
+        tween        : $('#shit-together').typingTween({
           duration: 1,
           add     : 'char'
         }),
         offset       : 800,
         duration     : 600,
         onStateChange: function (fromState, toState) {
-          var cursor = $('#out-of-time .typing-tween-cursor');
+          var
+              block = $('#shit-together');
 
           if (toState === 'IN_PROGRESS') {
-            cursor.show()
+            block.removeClass('crossed');
           }
           else {
-            cursor.hide()
+            block.addClass('crossed');
           }
         }
       },
       {
-        tween   : TweenMax.to($('#out-of-time'), .2, {css: {fontSize: 16, lineHeight: 20, top: 70}}),
+        tween   : TweenMax.to($('#shit-together'), .2, {css: {fontSize: 16, lineHeight: 20, top: 50}}),
         offset  : 1400,
         duration: 200
       },
       {
-        tween        : $('#kiss').typingTween({
+        tween        : $('#hot').typingTween({
           duration: 1,
           add     : 'char'
         }),
         offset       : 1600,
         duration     : 600,
         onStateChange: function (fromState, toState) {
-          var cursor = $('#kiss .typing-tween-cursor');
+          var
+              block = $('#hot');
 
           if (toState === 'IN_PROGRESS') {
-            cursor.show()
+            block.removeClass('crossed');
           }
           else {
-            cursor.hide()
+            block.addClass('crossed');
           }
         }
       },
       {
-        tween   : TweenMax.to($('#kiss'), .2, {css: {fontSize: 16, lineHeight: 20, top: 100}}),
+        tween   : TweenMax.to($('#hot'), .2, {css: {fontSize: 16, lineHeight: 20, top: 100}}),
         offset  : 2200,
         duration: 200
       }
@@ -106,5 +108,5 @@
     }
   }).height(1000 + 2400);
 
-  $('.typing-tween-cursor').not('#shit-together .typing-tween-cursor').hide();
+  $('#shit-together, #hot').addClass('crossed');
 </script>

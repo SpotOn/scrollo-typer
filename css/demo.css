@@ -6,6 +6,10 @@ body {
   width: 100%;
 }
 
+.crossed {
+  text-decoration: line-through;
+}
+
 #thoughts {
   width: 960px;
   margin: auto;
@@ -19,6 +23,11 @@ body {
   top: 300px;
   width: 960px;
 }
+
+#thoughts .crossed .typing-tween-cursor {
+  display: none;
+}
+
 
 #placeholder {
   color: #999;
