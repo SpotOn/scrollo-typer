@@ -137,7 +137,7 @@
           pinned,
 
           anims, anim, tween, onStateChange,
-          duration, start, end, offset, height,
+          duration, start, end, offset,
           $pusher,
           state,
           i, l,
@@ -156,7 +156,6 @@
           start = pin.start;
           end = pin.end;
           offset = pin.offset;
-          height = pin.height;
 
           scrollWithOffset += pin.offset;
 
@@ -167,7 +166,7 @@
             pin.pinned = 'IN_PROGRESS';
           }
           else if (pinned !== 'AFTER' && scrollWithOffset >= end) {
-            $target.css({position: 'absolute', top: start + height});
+            $target.css({position: 'absolute', top: end});
             pin.pinned = 'AFTER';
           }
           else if (pinned !== 'BEFORE' && scrollWithOffset <= start) {
